@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Competencia Medicina 💕</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      padding: 20px;
+      text-align: center;
+      color: #333;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      margin: 15px auto;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      background: #6a11cb;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .winner {
+      font-size: 20px;
+      color: green;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Competencia Medicina 💕</h1>
+
+<div class="card">
+  <h2>Login</h2>
+  <button onclick="login('Renzo')">Entrar como Renzo</button>
+  <button onclick="login('Amor')">Entrar como Amor</button>
+</div>
+
+<div class="card" id="app" style="display:none;">
+  <h2 id="userTitle"></h2>
+  <p>Puntos esta semana: <span id="points">0</span></p>
+
+  <h3>Tareas</h3>
+  <div id="tasks"></div>
+
+  <div class="winner" id="winner"></div>
+</div>
+
+<script>
+let currentUser = "";
+let points = { Renzo: 0, Amor: 0 };
+let goal = 5;
+
+let tasks = [
+  "Leer tema 1",
+  "Resumen tema 2",
+  "Flashcards",
+  "Banco de preguntas",
+  "Repaso final"
+];
+
+function login(user) {
+  currentUser = user;
+  document.querySelector(".card").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("userTitle").innerText = "Jugador: " + user;
+  renderTasks();
+}
+
+function renderTasks() {
+  let container = document.getElementById("tasks");
+  container.innerHTML = "";
+  tasks.forEach((task, index) => {
+    let btn = document.createElement("button");
+    btn.innerText = task + " (+1 punto)";
+    btn.onclick = function() { completeTask(index); };
+    container.appendChild(btn);
+  });
+}
+
+function completeTask(index) {
+  points[currentUser]++;
+  document.getElementById("points").innerText = points[currentUser];
+  
+  if (points[currentUser] >= goal) {
+    document.getElementById("winner").innerText =
+      "🎆 " + currentUser + " ganó la semana 🎆";
+  }
+}
+</script>
+
+</body>
+</html>
